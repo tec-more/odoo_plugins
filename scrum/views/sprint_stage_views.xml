@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sprint Stage Views -->
+        <record id="view_scrum_sprint_stage_list" model="ir.ui.view">
+            <field name="name">scrum.sprint_stage.list</field>
+            <field name="model">scrum.sprint_stage</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="active"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_stage_form" model="ir.ui.view">
+            <field name="name">scrum.sprint_stage.form</field>
+            <field name="model">scrum.sprint_stage</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Sprint Stage Action -->
+        <record id="action_scrum_sprint_stage" model="ir.actions.act_window">
+            <field name="name">Sprint Stages</field>
+            <field name="res_model">scrum.sprint_stage</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new sprint stage
+                </p>
+            </field>
+        </record>
+
+   </data>
+</odoo>

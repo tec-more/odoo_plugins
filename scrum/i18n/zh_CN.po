@@ -1,0 +1,988 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#  - scrum
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-14 07:41+0000\n"
+"PO-Revision-Date: 2026-02-14 07:41+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_product_backlog
+msgid "Scrum Product Backlog"
+msgstr "Scrum 产品待办事项"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_team__name
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__name
+msgid "Name"
+msgstr "名称"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__project_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_team__project_id
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_list
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Project"
+msgstr "项目"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__description
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__description
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__description
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__description
+#: model:ir.model.fields,field_description:scrum.field_scrum_team__description
+msgid "Description"
+msgstr "描述"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__priority
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__priority
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__priority
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Priority"
+msgstr "优先级"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__status
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__status
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__status
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__status
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__status
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Status"
+msgstr "状态"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__estimated_story_points
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__estimated_story_points
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Estimated Story Points"
+msgstr "估计故事点"
+
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__sprint_backlog_ids
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__sprint_backlog_ids
+#: model:ir.ui.menu,name:scrum.menu_scrum_sprint_backlog
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_backlog
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Sprint Backlogs"
+msgstr "迭代待办事项"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__total_story_points
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__total_story_points
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Total Story Points"
+msgstr "总故事点"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_user_story
+msgid "Scrum User Story"
+msgstr "Scrum 用户故事"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__product_backlog_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__product_backlog_id
+msgid "Product Backlog"
+msgstr "产品待办事项"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__acceptance_criteria
+msgid "Acceptance Criteria"
+msgstr "验收标准"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__assigned_to
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__assigned_to
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Assigned To"
+msgstr "分配给"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__sprint_task_ids
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__sprint_task_ids
+#: model:ir.ui.menu,name:scrum.menu_scrum_sprint_task
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_task
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Sprint Tasks"
+msgstr "迭代任务"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__sprint_backlog_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__sprint_backlog_id
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "Sprint Backlog"
+msgstr "迭代待办事项"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_sprint_backlog
+msgid "Scrum Sprint Backlog"
+msgstr "Scrum 迭代待办事项"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__start_date
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__start_date
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__end_date
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__end_date
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "End Date"
+msgstr "结束日期"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__goal
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__goal
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Sprint Goal"
+msgstr "迭代目标"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__daily_meeting_ids
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__daily_meeting_ids
+#: model:ir.ui.menu,name:scrum.menu_scrum_daily_meeting
+#: model:ir.actions.act_window,name:scrum.action_scrum_daily_meeting
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Daily Meetings"
+msgstr "每日站会"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__completed_tasks
+msgid "Completed Tasks"
+msgstr "已完成任务"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__total_tasks
+msgid "Total Tasks"
+msgstr "总任务数"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__completion_percentage
+msgid "Completion Percentage"
+msgstr "完成百分比"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_sprint_task
+msgid "Scrum Sprint Task"
+msgstr "Scrum 迭代任务"
+
+
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__estimated_hours
+msgid "Estimated Hours"
+msgstr "估计工时"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__actual_hours
+msgid "Actual Hours"
+msgstr "实际工时"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_daily_meeting
+msgid "Scrum Daily Meeting"
+msgstr "Scrum 每日站会"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__meeting_date
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__meeting_date
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__meeting_date
+msgid "Meeting Date"
+msgstr "会议日期"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__start_time
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__start_time
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__start_time
+msgid "Start Time"
+msgstr "开始时间"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__end_time
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__end_time
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__end_time
+msgid "End Time"
+msgstr "结束时间"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__attendees
+msgid "Attendees"
+msgstr "参会人员"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__discussion_points
+msgid "Discussion Points"
+msgstr "讨论点"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__impediments
+msgid "Impediments"
+msgstr "障碍"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__notes
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__notes
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__notes
+msgid "Notes"
+msgstr "记录"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_sprint_review_meeting
+msgid "Scrum Sprint Review Meeting"
+msgstr "Scrum 迭代评审会议"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__demo_items
+msgid "Demo Items"
+msgstr "演示项"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__feedback
+msgid "Feedback"
+msgstr "反馈"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__action_items
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__action_items
+msgid "Action Items"
+msgstr "行动项"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_iteration_review_meeting
+msgid "Scrum Iteration Review Meeting"
+msgstr "Scrum 迭代回顾会议"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__retrospective_points
+msgid "Retrospective Points"
+msgstr "回顾点"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__improvements
+msgid "Improvements"
+msgstr "改进项"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__status__to_do
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__status__to_do
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_task__status__to_do
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "To Do"
+msgstr "待办"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__status__in_progress
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__status__in_progress
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_backlog__status__in_progress
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_plan__status__in_progress
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_task__status__in_progress
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__status__done
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__status__done
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_task__status__done
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "Done"
+msgstr "已完成"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_backlog__status__planning
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_plan__status__planning
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Planning"
+msgstr "计划中"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_backlog__status__completed
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_plan__status__completed
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Completed"
+msgstr "已完成"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_backlog__status__cancelled
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_sprint_plan__status__cancelled
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_main
+msgid "Scrum"
+msgstr "Scrum"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_product_backlog
+#: model:ir.actions.act_window,name:scrum.action_scrum_product_backlog
+msgid "Product Backlogs"
+msgstr "产品待办事项"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_user_story
+#: model:ir.actions.act_window,name:scrum.action_scrum_user_story
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__user_story_ids
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__user_story_id
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "User Stories"
+msgstr "用户故事"
+
+
+
+
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_meetings
+msgid "Meetings"
+msgstr "会议"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_sprint_review_meeting
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_review_meeting
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__sprint_review_meeting_ids
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Sprint Review Meetings"
+msgstr "迭代评审会议"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_iteration_review_meeting
+#: model:ir.actions.act_window,name:scrum.action_scrum_iteration_review_meeting
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__iteration_review_meeting_ids
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Iteration Review Meetings"
+msgstr "迭代回顾会议"
+
+#. module: scrum
+#: model:ir.module.module,description:scrum.module_scrum
+msgid "Scrum Project Management Module\n==============================\nThis module provides Scrum project management functionality for Odoo,\nincluding product backlog, user stories, sprint backlog, sprint tasks,\ndaily meetings, sprint review meetings, and iteration review meetings.\nThe product backlog is integrated with the project module."
+msgstr "Scrum 项目管理模块\n==============================\n此模块为 Odoo 提供 Scrum 项目管理功能，\n包括产品待办事项、用户故事、迭代待办事项、迭代任务、\n每日站会、迭代评审会议和迭代回顾会议。\n产品待办事项与项目模块集成。"
+
+#. module: scrum
+#: model:ir.module.module,name:scrum.module_scrum
+msgid "Scrum Project Management"
+msgstr "Scrum 项目管理"
+
+#. module: scrum
+#: model:ir.module.module,summary:scrum.module_scrum
+msgid "scrum project management module for Odoo"
+msgstr "Odoo 的 Scrum 项目管理模块"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_sprint_plan
+msgid "Scrum Sprint Plan"
+msgstr "Scrum 迭代计划"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__iteration_number
+msgid "Iteration Number"
+msgstr "迭代编号"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_backlog__sprint_plan_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_daily_meeting__sprint_plan_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_review_meeting__sprint_plan_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_iteration_review_meeting__sprint_plan_id
+#: model:ir.ui.menu,name:scrum.menu_scrum_sprint_plan
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_plan
+#: model:ir.model.fields,field_description:scrum.field_scrum_team__sprint_plan_ids
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_form
+msgid "Sprint Plans"
+msgstr "迭代计划"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_team
+msgid "Scrum Agile Team"
+msgstr "Scrum 敏捷团队"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team__team_member_ids
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__team_member_ids
+#: model:ir.actions.act_window,name:scrum.action_scrum_team_member
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_daily_meeting_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_review_meeting_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_iteration_review_meeting_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_list
+msgid "Team Members"
+msgstr "团队成员"
+
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_team_member
+msgid "Scrum Team Member"
+msgstr "Scrum 团队成员"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__team_id
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_plan__team_id
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_member_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Team"
+msgstr "团队"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__user_id
+msgid "User"
+msgstr "用户"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__member_type
+msgid "Member Type"
+msgstr "成员类型"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__role
+msgid "Role"
+msgstr "角色"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__director
+msgid "Director"
+msgstr "负责人"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_team_member__email
+msgid "Email"
+msgstr "邮箱"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_team_member__member_type__product_manager
+msgid "Product Manager"
+msgstr "产品经理"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_team_member__member_type__agile_coach
+msgid "Agile Coach"
+msgstr "敏捷教练"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_team_member__member_type__team_member
+msgid "Team Member"
+msgstr "团队成员"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_team_member__member_type__stakeholder
+msgid "Stakeholder"
+msgstr "干系人"
+
+#. module: scrum
+#: model:ir.ui.menu,name:scrum.menu_scrum_team
+#: model:ir.actions.act_window,name:scrum.action_scrum_team
+msgid "Teams"
+msgstr "团队"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_project_project__team_ids
+msgid "Scrum Teams"
+msgstr "Scrum 团队"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "User Story"
+msgstr "用户故事"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Sprint Plan"
+msgstr "迭代计划"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Sub Product Backlog"
+msgstr "子产品待办事项"
+
+
+
+
+
+
+
+
+
+
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "Product Backlog"
+msgstr "产品待办事项"
+
+
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_daily_meeting_form
+msgid "Discussion Points"
+msgstr "讨论点"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_daily_meeting_form
+msgid "Impediments"
+msgstr "障碍"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_daily_meeting_form
+msgid "Notes"
+msgstr "记录"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_review_meeting_form
+msgid "Demo Items"
+msgstr "演示项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_review_meeting_form
+msgid "Feedback"
+msgstr "反馈"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_review_meeting_form
+msgid "Action Items"
+msgstr "行动项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_iteration_review_meeting_form
+msgid "Retrospective Points"
+msgstr "回顾点"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_iteration_review_meeting_form
+msgid "Improvements"
+msgstr "改进项"
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Estimated Hours"
+msgstr "估计工时"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Actual Hours"
+msgstr "实际工时"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Iteration Number"
+msgstr "迭代编号"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Completed Tasks"
+msgstr "已完成任务"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Total Tasks"
+msgstr "总任务数"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Completion Percentage"
+msgstr "完成百分比"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Product Backlog"
+msgstr "产品待办事项"
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Sprint Backlog"
+msgstr "迭代待办事项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Description"
+msgstr "描述"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Acceptance Criteria"
+msgstr "验收标准"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_member_form
+msgid "User"
+msgstr "用户"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_member_form
+msgid "Member Type"
+msgstr "成员类型"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_member_form
+msgid "Email"
+msgstr "邮箱"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Sprint Backlog"
+msgstr "迭代待办事项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_form
+msgid "Description"
+msgstr "描述"
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Iteration Number"
+msgstr "迭代编号"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_form
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Sprint Plan"
+msgstr "迭代计划"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "User Story"
+msgstr "用户故事"
+
+
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Sub Product Backlog"
+msgstr "子产品待办事项"
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_team_form
+msgid "Team Members"
+msgstr "团队成员"
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "To Do"
+msgstr "待办"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "Done"
+msgstr "已完成"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "Sprint Backlog"
+msgstr "迭代待办事项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "User Story"
+msgstr "用户故事"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_search
+msgid "Project"
+msgstr "项目"
+
+
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "Planning"
+msgstr "计划中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "Completed"
+msgstr "已完成"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "Project"
+msgstr "项目"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_plan_search
+msgid "Team"
+msgstr "团队"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Planning"
+msgstr "计划中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Completed"
+msgstr "已完成"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Sprint Plan"
+msgstr "迭代计划"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "User Story"
+msgstr "用户故事"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_search
+msgid "Project"
+msgstr "项目"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+msgid "To Do"
+msgstr "待办"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+msgid "Done"
+msgstr "已完成"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+msgid "Project"
+msgstr "项目"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_search
+msgid "Status"
+msgstr "状态"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "To Do"
+msgstr "待办"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "Done"
+msgstr "已完成"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "Product Backlog"
+msgstr "产品待办事项"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_search
+msgid "Project"
+msgstr "项目"
+
+#. module: scrum
+#: model:ir.model,name:scrum.model_scrum_sprint_stage
+
+msgid "Scrum Sprint Stage"
+msgstr "Scrum 敏捷阶段"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_stage__name
+msgid "Name"
+msgstr "名称"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_stage__sequence
+msgid "Sequence"
+msgstr "顺序"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_stage__active
+msgid "Active"
+msgstr "激活"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_stage__color
+msgid "Color"
+msgstr "颜色"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_sprint_task__sprint_stage_id
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_task_kanban
+msgid "Sprint Stage"
+msgstr "敏捷阶段"
+
+#. module: scrum
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_stage
+#: model:ir.ui.menu,name:scrum.menu_sprint_stage
+#: model:ir.actions.act_window,name:scrum.action_scrum_sprint_stage
+msgid "Sprint Stages"
+msgstr "敏捷阶段"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_list
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_form
+msgid "Sequence"
+msgstr "顺序"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_list
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_form
+msgid "Name"
+msgstr "名称"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_list
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_stage_form
+msgid "Active"
+msgstr "激活"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_1
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_1
+msgid "To Do"
+msgstr "待办"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_2
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_2
+msgid "In Progress"
+msgstr "进行中"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_3
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_3
+msgid "Code Review"
+msgstr "代码审查"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_4
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_4
+msgid "Test"
+msgstr "测试"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_5
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_5
+msgid "Ready For Accept"
+msgstr "待验收"
+
+#. module: scrum
+#: model_ir.model.data,name:scrum.sprint_stage_6
+#: model:scrum.sprint_stage,name:scrum.sprint_stage_6
+msgid "Done"
+msgstr "已完成"
+

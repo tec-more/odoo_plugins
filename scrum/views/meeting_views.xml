@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Daily Meeting Views -->
+        <record id="view_scrum_daily_meeting_list" model="ir.ui.view">
+            <field name="name">scrum.daily_meeting.list</field>
+            <field name="model">scrum.daily_meeting</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sprint_plan_id"/>
+                    <field name="project_id"/>
+                    <field name="meeting_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_daily_meeting_form" model="ir.ui.view">
+            <field name="name">scrum.daily_meeting.form</field>
+            <field name="model">scrum.daily_meeting</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sprint_plan_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="meeting_date"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <field name="discussion_points"/>
+                        <field name="impediments"/>
+                        <field name="notes"/>
+						<notebook>
+							<page string="Team Members">
+                                <field name="team_member_ids"/>
+                            </page>
+						</notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Sprint Review Meeting Views -->
+        <record id="view_scrum_sprint_review_meeting_list" model="ir.ui.view">
+            <field name="name">scrum.sprint_review_meeting.list</field>
+            <field name="model">scrum.sprint_review_meeting</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sprint_plan_id"/>
+                    <field name="project_id"/>
+                    <field name="meeting_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_review_meeting_form" model="ir.ui.view">
+            <field name="name">scrum.sprint_review_meeting.form</field>
+            <field name="model">scrum.sprint_review_meeting</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sprint_plan_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="meeting_date"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <field name="demo_items"/>
+                        <field name="feedback"/>
+                        <field name="action_items"/>
+                        <field name="notes"/>
+						<notebook>
+							<page string="Team Members">
+									<field name="team_member_ids"/>
+							</page>
+						</notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Iteration Review Meeting Views -->
+        <record id="view_scrum_iteration_review_meeting_list" model="ir.ui.view">
+            <field name="name">scrum.iteration_review_meeting.list</field>
+            <field name="model">scrum.iteration_review_meeting</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sprint_plan_id"/>
+                    <field name="project_id"/>
+                    <field name="meeting_date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_iteration_review_meeting_form" model="ir.ui.view">
+            <field name="name">scrum.iteration_review_meeting.form</field>
+            <field name="model">scrum.iteration_review_meeting</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sprint_plan_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="meeting_date"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                        </group>
+                        <field name="retrospective_points"/>
+                        <field name="improvements"/>
+                        <field name="action_items"/>
+                        <field name="notes"/>
+						<notebook>
+							<page string="Team Members">
+									<field name="team_member_ids"/>
+							</page>
+						</notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Meeting Actions -->
+        <record id="action_scrum_daily_meeting" model="ir.actions.act_window">
+            <field name="name">Daily Meetings</field>
+            <field name="res_model">scrum.daily_meeting</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new daily meeting
+                </p>
+            </field>
+        </record>
+
+        <record id="action_scrum_sprint_review_meeting" model="ir.actions.act_window">
+            <field name="name">Sprint Review Meetings</field>
+            <field name="res_model">scrum.sprint_review_meeting</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new sprint review meeting
+                </p>
+            </field>
+        </record>
+
+        <record id="action_scrum_iteration_review_meeting" model="ir.actions.act_window">
+            <field name="name">Iteration Review Meetings</field>
+            <field name="res_model">scrum.iteration_review_meeting</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new iteration review meeting
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sprint_stage_1" model="scrum.sprint_stage">
+        <field name="name">To Do</field>
+        <field name="sequence">10</field>
+    </record>
+    
+    <record id="sprint_stage_2" model="scrum.sprint_stage">
+        <field name="name">In Progress</field>
+        <field name="sequence">20</field>
+    </record>
+    
+    <record id="sprint_stage_3" model="scrum.sprint_stage">
+        <field name="name">Code Review</field>
+        <field name="sequence">30</field>
+    </record>
+    
+    <record id="sprint_stage_4" model="scrum.sprint_stage">
+        <field name="name">Test</field>
+        <field name="sequence">40</field>
+    </record>
+    
+    <record id="sprint_stage_5" model="scrum.sprint_stage">
+        <field name="name">Ready For Accept</field>
+        <field name="sequence">50</field>
+    </record>
+    
+    <record id="sprint_stage_6" model="scrum.sprint_stage">
+        <field name="name">Done</field>
+        <field name="sequence">60</field>
+    </record>
+</odoo>

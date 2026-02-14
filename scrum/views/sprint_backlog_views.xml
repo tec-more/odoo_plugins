@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sprint Backlog Views -->
+        <record id="view_scrum_sprint_backlog_list" model="ir.ui.view">
+            <field name="name">scrum.sprint_backlog.list</field>
+            <field name="model">scrum.sprint_backlog</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sprint_plan_id"/>
+                    <field name="user_story_id"/>
+                    <field name="project_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="status"/>
+                    <field name="total_story_points"/>
+                    <field name="completion_percentage"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_backlog_form" model="ir.ui.view">
+            <field name="name">scrum.sprint_backlog.form</field>
+            <field name="model">scrum.sprint_backlog</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sprint_plan_id"/>
+                            <field name="user_story_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="status"/>
+                            <field name="total_story_points" readonly="1"/>
+                            <field name="completed_tasks" readonly="1"/>
+                            <field name="total_tasks" readonly="1"/>
+                            <field name="completion_percentage" readonly="1"/>
+                        </group>
+                        <field name="goal"/>
+                        <notebook>
+                            <page string="Sprint Tasks">
+                                <field name="sprint_task_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_backlog_search" model="ir.ui.view">
+            <field name="name">scrum.sprint_backlog.search</field>
+            <field name="model">scrum.sprint_backlog</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="sprint_plan_id"/>
+                    <field name="project_id"/>
+					<field name="user_story_id" string="User Stories"/>
+                    <field name="status"/>
+                    <filter name="planning" string="Planning" domain="[('status', '=', 'planning')]"/>
+                    <filter name="in_progress" string="In Progress" domain="[('status', '=', 'in_progress')]"/>
+                    <filter name="completed" string="Completed" domain="[('status', '=', 'completed')]"/>
+                    <filter name="cancelled" string="Cancelled" domain="[('status', '=', 'cancelled')]"/>
+                    <group>
+                        <filter name="group_by_sprint_plan" string="Sprint Plan" domain="[]" context="{'group_by': 'sprint_plan_id'}"/>
+                        <filter name="group_by_user_story" string="User Story" domain="[]" context="{'group_by': 'user_story_id'}"/>
+                        <filter name="group_by_project" string="Project" domain="[]" context="{'group_by': 'project_id'}"/>
+                        <filter name="group_by_status" string="Status" domain="[]" context="{'group_by': 'status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Sprint Backlog Action -->
+        <record id="action_scrum_sprint_backlog" model="ir.actions.act_window">
+            <field name="name">Sprint Backlogs</field>
+            <field name="res_model">scrum.sprint_backlog</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_scrum_sprint_backlog_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new sprint backlog
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

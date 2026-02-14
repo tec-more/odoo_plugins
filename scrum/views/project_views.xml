@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Project Form View to add Team field -->
+        <record id="view_project_form_inherit_scrum" model="ir.ui.view">
+            <field name="name">project.form.inherit.scrum</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="tag_ids" position="after">
+                    <field name="team_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Sprint Task Views -->
+        <record id="view_scrum_sprint_task_list" model="ir.ui.view">
+            <field name="name">scrum.sprint_task.list</field>
+            <field name="model">scrum.sprint_task</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="sprint_backlog_id"/>
+                    <field name="user_story_id"/>
+                    <field name="project_id"/>
+                    <field name="sprint_stage_id"/>
+                    <field name="priority"/>
+                    <field name="assigned_to"/>
+                    <field name="estimated_hours"/>
+                    <field name="actual_hours"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_task_form" model="ir.ui.view">
+            <field name="name">scrum.sprint_task.form</field>
+            <field name="model">scrum.sprint_task</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="sprint_backlog_id"/>
+                            <field name="user_story_id"/>
+                            <field name="project_id" readonly="1"/>
+                            <field name="sprint_stage_id"/>
+                            <field name="priority"/>
+                            <field name="assigned_to"/>
+                            <field name="team_member_ids" widget="many2many_tags"/>
+                            <field name="estimated_hours"/>
+                            <field name="actual_hours"/>
+                        </group>
+                        <field name="description"/>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_scrum_sprint_task_search" model="ir.ui.view">
+            <field name="name">scrum.sprint_task.search</field>
+            <field name="model">scrum.sprint_task</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="sprint_backlog_id"/>
+                    <field name="user_story_id"/>
+                    <field name="project_id"/>
+                    <field name="sprint_stage_id"/>
+                    <field name="assigned_to"/>
+                    <group>
+                        <filter name="group_by_sprint_backlog" string="Sprint Backlog" domain="[]" context="{'group_by': 'sprint_backlog_id'}"/>
+                        <filter name="group_by_user_story" string="User Story" domain="[]" context="{'group_by': 'user_story_id'}"/>
+                        <filter name="group_by_project" string="Project" domain="[]" context="{'group_by': 'project_id'}"/>
+                        <filter name="group_by_sprint_stage" string="Sprint Stage" domain="[]" context="{'group_by': 'sprint_stage_id'}"/>
+                        <filter name="group_by_assigned_to" string="Assigned To" domain="[]" context="{'group_by': 'assigned_to'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Sprint Task Kanban View -->
+        <record id="view_scrum_sprint_task_kanban" model="ir.ui.view">
+            <field name="name">scrum.sprint_task.kanban</field>
+            <field name="model">scrum.sprint_task</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="sprint_stage_id">
+                    <field name="name"/>
+                    <field name="sprint_stage_id"/>
+                    <field name="priority"/>
+                    <field name="assigned_to"/>
+                    <field name="estimated_hours"/>
+                    <field name="actual_hours"/>
+                    <field name="sprint_backlog_id"/>
+                    <field name="user_story_id"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_title"><field name="name"/></div>
+                                <div class="oe_kanban_list_content">
+                                    <div><strong>Stage:</strong> <field name="sprint_stage_id"/></div>
+                                    <div><strong>Priority:</strong> <field name="priority"/></div>
+                                    <div><strong>Assigned:</strong> <field name="assigned_to"/></div>
+                                    <div><strong>Estimated:</strong> <field name="estimated_hours"/>h</div>
+                                    <div><strong>Actual:</strong> <field name="actual_hours"/>h</div>
+                                    <div><strong>Backlog:</strong> <field name="sprint_backlog_id"/></div>
+                                    <div><strong>Story:</strong> <field name="user_story_id"/></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Sprint Task Action -->
+        <record id="action_scrum_sprint_task" model="ir.actions.act_window">
+            <field name="name">Sprint Tasks</field>
+            <field name="res_model">scrum.sprint_task</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="search_view_id" ref="view_scrum_sprint_task_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new sprint task
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

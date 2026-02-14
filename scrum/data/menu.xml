@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Main Scrum Menu -->
+        <record id="menu_scrum_main" model="ir.ui.menu">
+            <field name="name">Scrum</field>
+            <field name="sequence">10</field>
+            <field name="parent_id" ref="project.menu_main_pm"/>
+        </record>
+
+        <!-- Product Backlogs Menu -->
+        <record id="menu_scrum_product_backlog" model="ir.ui.menu">
+            <field name="name">Product Backlogs</field>
+            <field name="sequence">1</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+            <field name="action" ref="action_scrum_product_backlog"/>
+        </record>
+
+        <!-- User Stories Menu -->
+        <record id="menu_scrum_user_story" model="ir.ui.menu">
+            <field name="name">User Stories</field>
+            <field name="sequence">2</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+            <field name="action" ref="action_scrum_user_story"/>
+        </record>
+
+        <!-- Sprint Backlogs Menu -->
+        <record id="menu_scrum_sprint_backlog" model="ir.ui.menu">
+            <field name="name">Sprint Backlogs</field>
+            <field name="sequence">10</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+            <field name="action" ref="action_scrum_sprint_backlog"/>
+        </record>
+        <!-- Sprint Stage Menu -->
+		<record id="menu_sprint_stage" model="ir.ui.menu">
+            <field name="name">Sprint Stages</field>
+            <field name="sequence">98</field>
+            <field name="parent_id" ref="project.menu_project_config"/>
+            <field name="action" ref="action_scrum_sprint_stage"/>
+        </record> 
+        <!-- Teams Menu -->
+        <record id="menu_scrum_team" model="ir.ui.menu">
+            <field name="name">Teams</field>
+            <field name="sequence">99</field>
+            <field name="parent_id" ref="project.menu_project_config"/>
+            <field name="action" ref="action_scrum_team"/>
+        </record>
+
+        <!-- Sprint Plan Menu -->
+        <record id="menu_scrum_sprint_plan" model="ir.ui.menu">
+            <field name="name">Sprint Plans</field>
+            <field name="sequence">5</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+            <field name="action" ref="action_scrum_sprint_plan"/>
+        </record>
+
+        <!-- Sprint Tasks Menu -->
+        <record id="menu_scrum_sprint_task" model="ir.ui.menu">
+            <field name="name">Sprint Tasks</field>
+            <field name="sequence">20</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+            <field name="action" ref="action_scrum_sprint_task"/>
+        </record>
+
+        <!-- Meetings Submenu -->
+        <record id="menu_scrum_meetings" model="ir.ui.menu">
+            <field name="name">Meetings</field>
+            <field name="sequence">30</field>
+            <field name="parent_id" ref="menu_scrum_main"/>
+        </record>
+
+        <!-- Daily Meetings Menu -->
+        <record id="menu_scrum_daily_meeting" model="ir.ui.menu">
+            <field name="name">Daily Meetings</field>
+            <field name="sequence">31</field>
+            <field name="parent_id" ref="menu_scrum_meetings"/>
+            <field name="action" ref="action_scrum_daily_meeting"/>
+        </record>
+
+        <!-- Sprint Review Meetings Menu -->
+        <record id="menu_scrum_sprint_review_meeting" model="ir.ui.menu">
+            <field name="name">Sprint Review Meetings</field>
+            <field name="sequence">32</field>
+            <field name="parent_id" ref="menu_scrum_meetings"/>
+            <field name="action" ref="action_scrum_sprint_review_meeting"/>
+        </record>
+
+        <!-- Iteration Review Meetings Menu -->
+        <record id="menu_scrum_iteration_review_meeting" model="ir.ui.menu">
+            <field name="name">Iteration Review Meetings</field>
+            <field name="sequence">33</field>
+            <field name="parent_id" ref="menu_scrum_meetings"/>
+            <field name="action" ref="action_scrum_iteration_review_meeting"/>
+        </record>
+    </data>
+</odoo>

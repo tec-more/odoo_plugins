@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Team Views -->
+        <record id="view_scrum_team_list" model="ir.ui.view">
+            <field name="name">scrum.team.list</field>
+            <field name="model">scrum.team</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <field name="team_member_ids" widget="many2many_tags"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_team_form" model="ir.ui.view">
+            <field name="name">scrum.team.form</field>
+            <field name="model">scrum.team</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name"/></h1>
+                        </div>
+                        <group>
+                            <field name="project_id"/>
+                        </group>
+                        <field name="description"/>
+                        <notebook>
+                            <page string="Team Members">
+                                <field name="team_member_ids"/>
+                            </page>
+                            <page string="Sprint Plans">
+                                <field name="sprint_plan_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_scrum_team_search" model="ir.ui.view">
+            <field name="name">scrum.team.search</field>
+            <field name="model">scrum.team</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="project_id"/>
+                    <group>
+                        <filter name="group_by_project" string="Project" domain="[]" context="{'group_by': 'project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Team Member Views -->
+        <record id="view_scrum_team_member_list" model="ir.ui.view">
+            <field name="name">scrum.team_member.list</field>
+            <field name="model">scrum.team_member</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="team_id"/>
+                    <field name="user_id"/>
+                    <field name="member_type"/>                            <field name="director" string="Director"/>
+                    <field name="email"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_scrum_team_member_form" model="ir.ui.view">
+            <field name="name">scrum.team_member.form</field>
+            <field name="model">scrum.team_member</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <field name="team_id"/>
+                            <field name="user_id"/>
+                            <field name="member_type"/>                            <field name="director" string="Director"/>
+                            <field name="email" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Team Action -->
+        <record id="action_scrum_team" model="ir.actions.act_window">
+            <field name="name">Teams</field>
+            <field name="res_model">scrum.team</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="view_scrum_team_search"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new agile team
+                </p>
+            </field>
+        </record>
+
+        <!-- Team Member Action -->
+        <record id="action_scrum_team_member" model="ir.actions.act_window">
+            <field name="name">Team Members</field>
+            <field name="res_model">scrum.team_member</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new team member
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
