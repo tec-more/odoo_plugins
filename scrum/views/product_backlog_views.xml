@@ -6,10 +6,12 @@
             <field name="name">scrum.product_backlog.list</field>
             <field name="model">scrum.product_backlog</field>
             <field name="arch" type="xml">
-                <list>
-                    <field name="name"/>
+                <list string="Product Backlog" decoration-muted="parent_id">
+                    <field name="path" string="Path"/>
                     <field name="project_id"/>
-                    <field name="status"/>
+                    <field name="level" optional="hide"/>
+                    <field name="parent_id" optional="hide"/>
+                    <field name="status" widget="badge" decoration-success="status == 'done'" decoration-warning="status == 'in_progress'" decoration-info="status == 'to_do'"/>
                     <field name="priority"/>
                     <field name="estimated_story_points"/>
                     <field name="total_story_points"/>
@@ -22,6 +24,11 @@
             <field name="model">scrum.product_backlog</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="action_parse_requirement" type="object" string="Parse Requirement" class="btn-primary" invisible="not requirement_file or parse_status == 'parsing'" confirm="This will create user stories from the uploaded file. Continue?"/>
+                        <button name="action_view_parsed_stories" type="object" string="View User Stories" class="btn-secondary" invisible="not user_story_ids"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <h1><field name="name"/></h1>
@@ -38,12 +45,21 @@
                                 <field name="description" nolabel="1"/>
                             </group>
                         </group>
+                        <group string="Requirement File">
+                            <field name="requirement_file" filename="requirement_filename"/>
+                            <!-- <field name="requirement_filename" invisible="not requirement_file"/> -->
+                            <field name="parse_status" widget="badge" decoration-success="parse_status == 'done'" decoration-warning="parse_status == 'parsing'" decoration-danger="parse_status == 'error'" decoration-info="parse_status == 'none'"/>
+                            <field name="parse_error" invisible="not parse_error"/>
+                        </group>
                         <notebook>
 							<page string="Sub Product Backlog">
 								<field name="child_ids"/>
 							</page>
                             <page string="User Stories">
                                 <field name="user_story_ids"/>
+                            </page>
+                            <page string="Parsed Stories JSON" invisible="not parsed_stories_json">
+                                <field name="parsed_stories_json" widget="json" readonly="1"/>
                             </page>
                         </notebook>
                     </sheet>

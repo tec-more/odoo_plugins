@@ -23,6 +23,13 @@
             <field name="model">scrum.user_story</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <button name="action_create_sprint_plan" type="object" string="Create Sprint Plan" class="btn-secondary" invisible="not project_id"/>
+                        <button name="action_create_sprint_backlog" type="object" string="Create Sprint Backlog" class="btn-secondary" invisible="not project_id"/>
+                        <button name="action_parse_to_tasks" type="object" string="Parse to Tasks" class="btn-primary" invisible="not sprint_backlog_id or parse_status == 'parsing'" confirm="This will create sprint tasks from this user story. Continue?"/>
+                        <button name="action_view_parsed_tasks" type="object" string="View Tasks" class="btn-secondary" invisible="not sprint_task_ids"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <h1><field name="name"/></h1>
@@ -36,16 +43,22 @@
                             <field name="assigned_to"/>
                             <field name="sprint_backlog_id"/>
                         </group>
+                        <group string="Parse Status">
+                            <field name="parse_status" widget="badge" decoration-success="parse_status == 'done'" decoration-warning="parse_status == 'parsing'" decoration-danger="parse_status == 'error'" decoration-info="parse_status == 'none'"/>
+                            <field name="parse_error" invisible="not parse_error"/>
+                        </group>
                         <field name="description"/>
                         <field name="acceptance_criteria"/>
                         <notebook>
                             <page string="Sprint Tasks">
                                 <field name="sprint_task_ids"/>
                             </page>
+                            <page string="Parsed Tasks JSON" invisible="not parsed_tasks_json">
+                                <field name="parsed_tasks_json" widget="json" readonly="1"/>
+                            </page>
                         </notebook>
-						
                     </sheet>
-					<chatter reload_on_follower="True"/>
+                    <chatter reload_on_follower="True"/>
                 </form>
             </field>
         </record>

@@ -567,6 +567,17 @@ msgstr "迭代计划"
 msgid "Sub Product Backlog"
 msgstr "子产品待办事项"
 
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__path
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_list
+msgid "Path"
+msgstr "路径"
+
+#. module: scrum
+#: model:ir.model.fields,help:scrum.field_scrum_product_backlog__path
+msgid "Full path with parent names separated by /"
+msgstr "用 / 分隔的父级名称完整路径"
+
 
 
 
@@ -894,12 +905,6 @@ msgid "Project"
 msgstr "项目"
 
 #. module: scrum
-#: model:ir.model,name:scrum.model_scrum_sprint_stage
-
-msgid "Scrum Sprint Stage"
-msgstr "Scrum 敏捷阶段"
-
-#. module: scrum
 #: model:ir.model.fields,field_description:scrum.field_scrum_sprint_stage__name
 msgid "Name"
 msgstr "名称"
@@ -985,4 +990,120 @@ msgstr "待验收"
 #: model:scrum.sprint_stage,name:scrum.sprint_stage_6
 msgid "Done"
 msgstr "已完成"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__requirement_file
+msgid "Requirement File"
+msgstr "需求文件"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__requirement_filename
+msgid "Filename"
+msgstr "文件名"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__parse_status
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__parse_status
+msgid "Parse Status"
+msgstr "解析状态"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__parse_status__none
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__parse_status__none
+msgid "Not Parsed"
+msgstr "未解析"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__parse_status__parsing
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__parse_status__parsing
+msgid "Parsing"
+msgstr "解析中"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__parse_status__done
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__parse_status__done
+msgid "Parsed"
+msgstr "已解析"
+
+#. module: scrum
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_product_backlog__parse_status__error
+#: model:ir.model.fields.selection,name:scrum.selection__scrum_user_story__parse_status__error
+msgid "Parse Error"
+msgstr "解析错误"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__parse_error
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__parse_error
+msgid "Parse Error Message"
+msgstr "解析错误信息"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_product_backlog__parsed_stories_json
+msgid "Parsed User Stories JSON"
+msgstr "解析的用户故事JSON"
+
+#. module: scrum
+#: model:ir.model.fields,field_description:scrum.field_scrum_user_story__parsed_tasks_json
+msgid "Parsed Tasks JSON"
+msgstr "解析的任务JSON"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Requirement File"
+msgstr "需求文件"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Parsed Stories JSON"
+msgstr "解析的用户故事JSON"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Parse to User Stories"
+msgstr "解析为用户故事"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "Parse Requirement"
+msgstr "解析需求"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_product_backlog_form
+msgid "View User Stories"
+msgstr "查看用户故事"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Parsed Tasks JSON"
+msgstr "解析的任务JSON"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Parse to Tasks"
+msgstr "解析为任务"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "View Tasks"
+msgstr "查看任务"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Parse Status"
+msgstr "解析状态"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_sprint_backlog_form
+msgid "Parse User Story to Tasks"
+msgstr "解析用户故事为任务"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Create Sprint Plan"
+msgstr "创建迭代计划"
+
+#. module: scrum
+#: model_terms:ir.ui.view,arch_db:scrum.view_scrum_user_story_form
+msgid "Create Sprint Backlog"
+msgstr "创建迭代待办事项"
 
