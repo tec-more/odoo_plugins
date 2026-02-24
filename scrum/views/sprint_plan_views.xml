@@ -34,6 +34,7 @@
                             <field name="start_date"/>
                             <field name="end_date"/>
                             <field name="status"/>
+                            <field name="has_burndown_chart" invisible="1"/>
                         </group>
                         <field name="goal"/>
                         <notebook>
@@ -48,6 +49,9 @@
                             </page>
                             <page string="Iteration Review Meetings">
                                 <field name="iteration_review_meeting_ids"/>
+                            </page>
+                            <page string="Burndown Charts">
+                                <field name="burndown_chart_ids"/>
                             </page>
                         </notebook>
                     </sheet>

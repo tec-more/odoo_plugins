@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="scrum_ai_analysis_tree_view" model="ir.ui.view">
+        <field name="name">scrum.ai.analysis.tree</field>
+        <field name="model">scrum.ai_analysis</field>
+        <field name="arch" type="xml">
+            <tree string="AI Analyses">
+                <field name="name"/>
+                <field name="analysis_type"/>
+                <field name="project_id"/>
+                <field name="status"/>
+                <field name="score"/>
+                <field name="grade"/>
+                <field name="approval_status"/>
+                <field name="analyzed_date"/>
+                <field name="approved_date"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="scrum_ai_analysis_form_view" model="ir.ui.view">
+        <field name="name">scrum.ai.analysis.form</field>
+        <field name="model">scrum.ai_analysis</field>
+        <field name="arch" type="xml">
+            <form string="AI Analysis">
+                <header>
+                    <button name="action_analyze" string="Start AI Analysis" type="object" class="btn-primary" attrs="{'invisible': [('status', '!=', 'pending')]}"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-success" attrs="{'invisible': [('approval_status', '!=', 'pending')]}"/>
+                    <button name="action_reject" string="Reject" type="object" class="btn-danger" attrs="{'invisible': [('approval_status', '!=', 'pending')]}"/>
+                    <button name="action_resend_for_analysis" string="Re-analyze" type="object" class="btn-warning" attrs="{'invisible': [('status', '=', 'analyzing')]}"/>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="analysis_type" readonly="1" force_save="1"/>
+                            <field name="project_id" readonly="1" force_save="1"/>
+                            <field name="sprint_plan_id" readonly="1" force_save="1" attrs="{'invisible': [('sprint_plan_id', '=', False)]}"/>
+                            <field name="sprint_backlog_id" readonly="1" force_save="1" attrs="{'invisible': [('sprint_backlog_id', '=', False)]}"/>
+                            <field name="user_story_id" readonly="1" force_save="1" attrs="{'invisible': [('user_story_id', '=', False)]}"/>
+                            <field name="sprint_task_id" readonly="1" force_save="1" attrs="{'invisible': [('sprint_task_id', '=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="status" readonly="1"/>
+                            <field name="score" readonly="1"/>
+                            <field name="grade" readonly="1"/>
+                            <field name="analyzed_by" readonly="1"/>
+                            <field name="analyzed_date" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="AI Feedback">
+                            <group>
+                                <field name="ai_feedback" readonly="1"/>
+                                <field name="suggestions" readonly="1"/>
+                                <field name="issues_found" readonly="1"/>
+                            </group>
+                        </page>
+                        
+                        <page string="Analysis Data">
+                            <field name="analysis_data_formatted" readonly="1" widget="text"/>
+                        </page>
+                        
+                        <page string="Approval">
+                            <group>
+                                <field name="approval_status"/>
+                                <field name="approved_by" readonly="1"/>
+                                <field name="approved_date" readonly="1"/>
+                                <field name="approval_notes"/>
+                            </group>
+                        </page>
+                        
+                        <page string="Settings">
+                            <group>
+                                <field name="ai_model"/>
+                                <field name="api_endpoint"/>
+                                <field name="api_key" password="True"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    
+    <record id="scrum_ai_analysis_search_view" model="ir.ui.view">
+        <field name="name">scrum.ai.analysis.search</field>
+        <field name="model">scrum.ai_analysis</field>
+        <field name="arch" type="xml">
+            <search string="Search AI Analyses">
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="analysis_type"/>
+                <field name="status"/>
+                <field name="approval_status"/>
+                <field name="analyzed_date"/>
+                
+                <filter name="pending" string="Pending" domain="[('status', '=', 'pending')]"/>
+                <filter name="analyzing" string="Analyzing" domain="[('status', '=', 'analyzing')]"/>
+                <filter name="completed" string="Completed" domain="[('status', '=', 'completed')]"/>
+                <filter name="failed" string="Failed" domain="[('status', '=', 'failed')]"/>
+                <filter name="waiting_approval" string="Waiting Approval" domain="[('approval_status', '=', 'pending')]"/>
+                <filter name="approved" string="Approved" domain="[('approval_status', '=', 'approved')]"/>
+                <filter name="rejected" string="Rejected" domain="[('approval_status', '=', 'rejected')]"/>
+                
+                <separator/>
+                <filter name="quality" string="Quality Assessment" domain="[('analysis_type', '=', 'quality')]"/>
+                <filter name="requirement" string="Requirement Compliance" domain="[('analysis_type', '=', 'requirement')]"/>
+                <filter name="code_review" string="Code Review" domain="[('analysis_type', '=', 'code_review')]"/>
+                <filter name="sprint_review" string="Sprint Review" domain="[('analysis_type', '=', 'sprint_review')]"/>
+                
+                <group expand="0" string="Group By">
+                    <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                    <filter name="group_type" string="Analysis Type" context="{'group_by': 'analysis_type'}"/>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_approval" string="Approval Status" context="{'group_by': 'approval_status'}"/>
+                    <filter name="group_grade" string="Grade" context="{'group_by': 'grade'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    
+    <record id="scrum_ai_analysis_action" model="ir.actions.act_window">
+        <field name="name">AI Analyses</field>
+        <field name="res_model">scrum.ai_analysis</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first AI Analysis to evaluate project quality and requirements.
+            </p>
+        </field>
+    </record>
+    
+    <menuitem id="scrum_ai_analysis_menu" name="AI Analyses" parent="scrum_root_menu" sequence="100"/>
+    <menuitem id="scrum_ai_analysis_submenu" name="Analyses" parent="scrum_ai_analysis_menu" action="scrum_ai_analysis_action" sequence="1"/>
+</odoo>

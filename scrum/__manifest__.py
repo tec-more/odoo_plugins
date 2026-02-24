@@ -1,14 +1,20 @@
 {
     'name': 'Scrum Project Management',
-    'version': '1.0',
-    'summary': 'Scrum project management module for Odoo',
+    'version': '2.0',
+    'summary': 'Scrum project management module with AI integration',
     'description': '''
-        Scrum Project Management Module
-        ==============================
-        This module provides Scrum project management functionality for Odoo,
+        Scrum Project Management Module with AI Integration
+        ==================================================
+        This module provides comprehensive Scrum project management functionality for Odoo,
         including product backlog, user stories, sprint backlog, sprint tasks,
         daily meetings, sprint review meetings, and iteration review meetings.
-        The product backlog is integrated with the project module.
+        
+        NEW: AI-powered analysis for project quality assessment and requirement compliance.
+        - Automated quality scoring and grading
+        - Requirement compliance analysis
+        - Code review capabilities
+        - Sprint effectiveness evaluation
+        - Project manager approval workflow
     ''',
     'author': 'hepan',
     'category': 'Services/Project',
@@ -25,6 +31,8 @@
         'views/sprint_task_views.xml',
         'views/sprint_stage_views.xml',
         'views/meeting_views.xml',
+        'views/ai_analysis_views.xml',
+        'views/burndown_chart_views.xml',
         'data/menu.xml',
     ],
     'translation': {

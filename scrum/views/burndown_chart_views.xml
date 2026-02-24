@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Burndown Chart Views -->
+    <record id="scrum_burndown_chart_tree_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.chart.tree</field>
+        <field name="model">scrum.burndown_chart</field>
+        <field name="arch" type="xml">
+            <tree string="Burndown Charts">
+                <field name="name"/>
+                <field name="sprint_plan_id"/>
+                <field name="chart_type"/>
+                <field name="summary_text"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="scrum_burndown_chart_form_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.chart.form</field>
+        <field name="model">scrum.burndown_chart</field>
+        <field name="arch" type="xml">
+            <form string="Burndown Chart">
+                <header>
+                    <button name="action_generate_burndown_data" string="Generate Burndown Data" type="object" class="btn-primary"/>
+                    <button name="action_refresh_burndown_data" string="Refresh Data" type="object" class="btn-warning"/>
+                    <button name="action_clear_burndown_data" string="Clear Data" type="object" class="btn-danger" confirm="Are you sure you want to clear all burndown data?"/>
+                    <button name="action_view_burndown_data" string="View Data" type="object" class="btn-info"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="sprint_plan_id" readonly="1" force_save="1"/>
+                            <field name="chart_type"/>
+                            <field name="current_date"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Summary">
+                            <field name="summary_text" widget="text" readonly="1"/>
+                        </page>
+                        
+                        <page string="Burndown Data">
+                            <field name="data_ids">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="total_story_points"/>
+                                    <field name="remaining_story_points"/>
+                                    <field name="ideal_remaining"/>
+                                    <field name="variance"/>
+                                    <field name="completed_tasks"/>
+                                    <field name="remaining_tasks"/>
+                                </tree>
+                            </field>
+                        </page>
+                        
+                        <page string="Chart">
+                            <div class="o_web_studio">
+                                <t t-call="scrum.burndown_chart_template">
+                                    <t t-set="chart_data" t-value="o.get_burndown_chart_data()"/>
+                                </t>
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Burndown Data Views -->
+    <record id="scrum_burndown_data_tree_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.data.tree</field>
+        <field name="model">scrum.burndown_data</field>
+        <field name="arch" type="xml">
+            <tree string="Burndown Data">
+                <field name="date"/>
+                <field name="total_story_points"/>
+                <field name="remaining_story_points"/>
+                <field name="ideal_remaining"/>
+                <field name="variance"/>
+                <field name="completed_tasks"/>
+                <field name="remaining_tasks"/>
+                <field name="completed_hours"/>
+                <field name="remaining_hours"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="scrum_burndown_data_form_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.data.form</field>
+        <field name="model">scrum.burndown_data</field>
+        <field name="arch" type="xml">
+            <form string="Burndown Data">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="sprint_plan_id" readonly="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="total_story_points"/>
+                            <field name="remaining_story_points"/>
+                            <field name="ideal_remaining"/>
+                            <field name="variance"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="total_tasks"/>
+                            <field name="remaining_tasks"/>
+                            <field name="completed_tasks"/>
+                        </group>
+                        <group>
+                            <field name="total_hours"/>
+                            <field name="remaining_hours"/>
+                            <field name="completed_hours"/>
+                        </group>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <!-- Burndown Chart Graph View -->
+    <record id="scrum_burndown_data_graph_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.data.graph</field>
+        <field name="model">scrum.burndown_data</field>
+        <field name="arch" type="xml">
+            <graph string="Burndown Chart">
+                <field name="date" type="row"/>
+                <field name="remaining_story_points" type="measure" name="Actual Remaining"/>
+                <field name="ideal_remaining" type="measure" name="Ideal Remaining"/>
+            </graph>
+        </field>
+    </record>
+    
+    <!-- Burndown Chart Pivot View -->
+    <record id="scrum_burndown_data_pivot_view" model="ir.ui.view">
+        <field name="name">scrum.burndown.data.pivot</field>
+        <field name="model">scrum.burndown_data</field>
+        <field name="arch" type="xml">
+            <pivot string="Burndown Analysis" disable_linking="True">
+                <field name="date" type="row" interval="day"/>
+                <field name="remaining_story_points" type="measure"/>
+                <field name="ideal_remaining" type="measure"/>
+                <field name="variance" type="measure"/>
+                <field name="completed_tasks" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    
+    <!-- Actions -->
+    <record id="scrum_burndown_chart_action" model="ir.actions.act_window">
+        <field name="name">Burndown Charts</field>
+        <field name="res_model">scrum.burndown_chart</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first burndown chart to track sprint progress.
+            </p>
+        </field>
+    </record>
+    
+    <record id="scrum_burndown_data_action" model="ir.actions.act_window">
+        <field name="name">Burndown Data</field>
+        <field name="res_model">scrum.burndown_data</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+    </record>
+    
+    <!-- Add burndown chart button to sprint plan form -->
+    <record id="view_sprint_plan_form_inherit_burndown" model="ir.ui.view">
+        <field name="name">sprint.plan.form.inherit.burndown</field>
+        <field name="model">scrum.sprint_plan</field>
+        <field name="inherit_id" ref="sprint_plan_views.scrum_sprint_plan_form_view"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_create_burndown_chart" type="object" class="oe_stat_button" icon="fa-chart-line" string="Create Burndown Chart" attrs="{'invisible': [('has_burndown_chart', '=', True)]}"/>
+                <button name="action_view_burndown_charts" type="object" class="oe_stat_button" icon="fa-chart-line" string="View Burndown Charts" attrs="{'invisible': [('has_burndown_chart', '=', False)]}"/>
+            </div>
+        </field>
+    </record>
+    
+    <!-- Menu Items -->
+    <menuitem id="scrum_burndown_chart_menu" name="Burndown Charts" parent="scrum_root_menu" sequence="90"/>
+    <menuitem id="scrum_burndown_chart_submenu" name="Burndown Charts" parent="scrum_burndown_chart_menu" action="scrum_burndown_chart_action" sequence="1"/>
+    <menuitem id="scrum_burndown_data_submenu" name="Burndown Data" parent="scrum_burndown_chart_menu" action="scrum_burndown_data_action" sequence="2"/>
+</odoo>

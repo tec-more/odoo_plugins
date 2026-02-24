@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from odoo import models, fields, api,_
 
 class ScrumSprintTask(models.Model):
@@ -46,4 +47,20 @@ class ScrumSprintTask(models.Model):
                     done_stage = self.env['scrum.sprint_stage'].search([('name', '=ilike', 'Done')], limit=1)
                     if done_stage and vals['sprint_stage_id'] == done_stage.id and not record.actual_hours:
                         record.actual_hours = record.estimated_hours
+                    
+                    if record.sprint_backlog_id and record.sprint_backlog_id.sprint_plan_id:
+                        self._update_burndown_data(record.sprint_backlog_id.sprint_plan_id)
         return result
+    
+    def _update_burndown_data(self, sprint_plan):
+        self.ensure_one()
+        
+        burndown_charts = self.env['scrum.burndown_chart'].search([
+            ('sprint_plan_id', '=', sprint_plan.id)
+        ])
+        
+        for chart in burndown_charts:
+            try:
+                chart._update_daily_progress(sprint_plan)
+            except Exception as e:
+                pass

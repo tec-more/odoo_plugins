@@ -255,3 +255,42 @@ class ScrumUserStory(models.Model):
                 'default_iteration_number': next_iteration,
             },
         }
+    
+    def action_analyze_requirements(self):
+        self.ensure_one()
+        return {
+            'name': _('Analyze Requirements'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'scrum.ai_analysis',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_project_id': self.project_id.id,
+                'default_user_story_id': self.id,
+                'default_analysis_type': 'requirement',
+            },
+        }
+    
+    def action_analyze_quality(self):
+        self.ensure_one()
+        return {
+            'name': _('Analyze Quality'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'scrum.ai_analysis',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_project_id': self.project_id.id,
+                'default_user_story_id': self.id,
+                'default_analysis_type': 'quality',
+            },
+        }
+    
+    @api.depends('sprint_task_ids')
+    def _compute_ai_analysis_count(self):
+        for record in self:
+            record.ai_analysis_count = self.env['scrum.ai_analysis'].search_count([
+                ('user_story_id', '=', record.id)
+            ])
+    
+    ai_analysis_count = fields.Integer(string='AI Analysis Count', compute='_compute_ai_analysis_count')

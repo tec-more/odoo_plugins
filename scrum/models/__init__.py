@@ -8,3 +8,5 @@ from . import sprint_plan
 from . import team
 from . import project_inherit
 from . import sprint_stage
+from . import ai_analysis
+from . import burndown_chart

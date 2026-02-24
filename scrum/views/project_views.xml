@@ -12,5 +12,61 @@
                 </field>
             </field>
         </record>
+        
+        <!-- Add Scrum and AI Analysis fields to project form -->
+        <record id="view_project_form_inherit_scrum_ai" model="ir.ui.view">
+            <field name="name">project.form.inherit.scrum.ai</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <sheet position="inside">
+                    <group name="scrum_info" string="Scrum Information">
+                        <field name="scrum_status"/>
+                        <field name="auto_analyze"/>
+                        <field name="minimum_quality_threshold"/>
+                    </group>
+                    <group name="quality_metrics" string="Quality Metrics">
+                        <field name="overall_quality_score" widget="percentage"/>
+                        <field name="overall_grade"/>
+                        <field name="requirement_compliance_score" widget="percentage"/>
+                        <field name="code_quality_score" widget="percentage"/>
+                        <field name="sprint_effectiveness_score" widget="percentage"/>
+                        <field name="quality_passed" widget="boolean_toggle"/>
+                        <field name="last_analysis_date"/>
+                    </group>
+                    <notebook position="inside">
+                        <page name="ai_feedback" string="AI Feedback Summary">
+                            <field name="ai_feedback_summary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_button_box" position="inside">
+                    <button name="action_analyze_project_quality" type="object" class="oe_stat_button" icon="fa-check-circle" string="Analyze Quality"/>
+                    <button name="action_analyze_requirements" type="object" class="oe_stat_button" icon="fa-list-check" string="Check Requirements"/>
+                    <button name="action_view_analyses" type="object" class="oe_stat_button" icon="fa-robot" string="AI Analyses"/>
+                </div>
+            </field>
+        </record>
+        
+        <!-- Add statistics to project kanban view -->
+        <record id="view_project_kanban_inherit_scrum" model="ir.ui.view">
+            <field name="name">project.kanban.inherit.scrum</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="overall_quality_score"/>
+                    <field name="overall_grade"/>
+                    <field name="quality_passed"/>
+                </field>
+                <div class="oe_kanban_bottom_right" position="inside">
+                    <div t-if="record.overall_quality_score.raw_value">
+                        <span class="badge" t-att-class="record.quality_passed.raw_value ? 'badge-success' : 'badge-warning'">
+                            <t t-esc="record.overall_grade.raw_value"/>: <t t-esc="record.overall_quality_score.raw_value"/>%
+                        </span>
+                    </div>
+                </div>
+            </field>
+        </record>
     </data>
 </odoo>

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+import logging
 from odoo import models, fields, api,_
+
+_logger = logging.getLogger(__name__)
 
 class ScrumSprintPlan(models.Model):
     _name = 'scrum.sprint_plan'
@@ -88,6 +91,46 @@ class ScrumSprintPlan(models.Model):
         if not any(sb.status == 'completed' for sb in self.sprint_backlog_ids):
             raise UserError(_('Cannot complete Sprint Plan. At least one Sprint Backlog must be completed.'))
         self.write({'status': 'completed'})
+        
+        if self.project_id and self.project_id.auto_analyze:
+            self._create_auto_ai_analysis()
+    
+    def _create_auto_ai_analysis(self):
+        self.ensure_one()
+        try:
+            self.env['scrum.ai_analysis'].create({
+                'name': f'Auto Analysis - {self.name}',
+                'analysis_type': 'sprint_review',
+                'project_id': self.project_id.id,
+                'sprint_plan_id': self.id,
+            }).action_analyze()
+        except Exception as e:
+            _logger.warning('Auto AI analysis failed for sprint %s: %s', self.name, e)
+    
+    def action_create_burndown_chart(self):
+        self.ensure_one()
+        return {
+            'name': _('Create Burndown Chart'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'scrum.burndown_chart',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_name': f'Burndown Chart - {self.name}',
+                'default_sprint_plan_id': self.id,
+            },
+        }
+    
+    def action_view_burndown_charts(self):
+        self.ensure_one()
+        return {
+            'name': _('Burndown Charts'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'scrum.burndown_chart',
+            'view_mode': 'tree,form',
+            'domain': [('sprint_plan_id', '=', self.id)],
+            'context': {'default_sprint_plan_id': self.id},
+        }
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
     status = fields.Selection([
@@ -102,4 +145,12 @@ class ScrumSprintPlan(models.Model):
     sprint_review_meeting_ids = fields.One2many('scrum.sprint_review_meeting', 'sprint_plan_id', string='Sprint Review Meetings')
     iteration_review_meeting_ids = fields.One2many('scrum.iteration_review_meeting', 'sprint_plan_id', string='Iteration Review Meetings')
     team_member_ids = fields.Many2many('scrum.team_member', string='Team Members', domain="[('team_id', '=', team_id)]")
+    burndown_chart_ids = fields.One2many('scrum.burndown_chart', 'sprint_plan_id', string='Burndown Charts')
+    
+    @api.depends('burndown_chart_ids')
+    def _compute_has_burndown_chart(self):
+        for record in self:
+            record.has_burndown_chart = bool(record.burndown_chart_ids)
+    
+    has_burndown_chart = fields.Boolean(string='Has Burndown Chart', compute='_compute_has_burndown_chart', store=True)
 
