@@ -26,7 +26,8 @@ class ScrumSprintTask(models.Model):
     description = fields.Text(string='Description')
     priority = fields.Integer(string='Priority', default=1)
     sprint_stage_id = fields.Many2one('scrum.sprint_stage', string='Sprint Stage', required=True, default=lambda self: self._default_sprint_stage(),group_expand='_read_group_expand_full')
-    assigned_to = fields.Many2one('res.users', string='Assigned To')
+    team_id = fields.Many2one('scrum.team', related='sprint_backlog_id.sprint_plan_id.team_id', string='Team', store=True)
+    assigned_to = fields.Many2one('scrum.team_member', string='Assigned To', domain="[('team_id', '=', team_id)]")
     
 
     estimated_hours = fields.Float(string='Estimated Hours')
@@ -38,5 +39,4 @@ class ScrumSprintTask(models.Model):
             self.project_id = self.sprint_backlog_id.project_id
 
     project_id = fields.Many2one('project.project', string='Project', related='sprint_backlog_id.project_id', store=True, readonly=True)
-    team_id = fields.Many2one('scrum.team', related='sprint_backlog_id.sprint_plan_id.team_id', string='Team', store=True, required=True)
     team_member_ids = fields.Many2many('scrum.team_member', string='Team Members', domain="[('team_id', '=', team_id)]")

@@ -39,7 +39,7 @@ class ScrumSprintBacklog(models.Model):
     @api.depends('sprint_task_ids')
     def _compute_completed_tasks(self):
         for record in self:
-            completed_tasks = sum(1 for task in record.sprint_task_ids if task.status == 'done')
+            completed_tasks = sum(1 for task in record.sprint_task_ids if task.sprint_stage_id and task.sprint_stage_id.name == 'Done')
             total_tasks = len(record.sprint_task_ids)
             record.completed_tasks = completed_tasks
             record.total_tasks = total_tasks
@@ -62,11 +62,14 @@ class ScrumSprintBacklog(models.Model):
             raise UserError(_('Please assign a User Story first.'))
         
         try:
-            content = self.user_story_id.description or ''
-            if self.user_story_id.acceptance_criteria:
-                content += '\n' + self.user_story_id.acceptance_criteria
+            tasks_data = self._load_tasks_from_product_backlog()
             
-            tasks_data = self._parse_content_to_tasks(content)
+            if not tasks_data:
+                content = self.user_story_id.description or ''
+                if self.user_story_id.acceptance_criteria:
+                    content += '\n' + self.user_story_id.acceptance_criteria
+                tasks_data = self._parse_content_to_tasks(content)
+            
             self._create_sprint_tasks(tasks_data)
             
             self.user_story_id.parsed_tasks_json = json.dumps(tasks_data, ensure_ascii=False, indent=2)
@@ -77,6 +80,71 @@ class ScrumSprintBacklog(models.Model):
             self.user_story_id.parse_error = str(e)
             _logger.error('Failed to parse user story to tasks: %s', e)
             raise UserError(_('Failed to parse user story to tasks: %s') % e)
+
+    def _load_tasks_from_product_backlog(self):
+        self.ensure_one()
+        
+        if not self.user_story_id or not self.user_story_id.product_backlog_id:
+            return []
+        
+        product_backlog = self.user_story_id.product_backlog_id
+        
+        epic_backlog = self._find_epic_parent(product_backlog)
+        if not epic_backlog or not epic_backlog.parsed_stories_json:
+            return []
+        
+        data = epic_backlog.parsed_stories_json
+        if isinstance(data, str):
+            try:
+                data = json.loads(data)
+            except json.JSONDecodeError:
+                return []
+        
+        user_story_name = self.user_story_id.name if self.user_story_id else ''
+        story_node = self._find_story_in_json(data, user_story_name)
+        
+        if story_node:
+            tasks = story_node.get('tasks', [])
+            return [self._normalize_task(task) for task in tasks]
+        
+        return []
+
+    def _find_epic_parent(self, backlog):
+        if backlog.backlog_type == 'epic' and backlog.parse_status == 'done':
+            return backlog
+        
+        if backlog.parent_id:
+            return self._find_epic_parent(backlog.parent_id)
+        
+        return None
+
+    def _find_story_in_json(self, data, user_story_name):
+        if isinstance(data, dict):
+            if data.get('type') == 'story':
+                if data.get('name') == user_story_name:
+                    return data
+            
+            children = data.get('children', [])
+            for child in children:
+                result = self._find_story_in_json(child, user_story_name)
+                if result:
+                    return result
+        
+        elif isinstance(data, list):
+            for item in data:
+                result = self._find_story_in_json(item, user_story_name)
+                if result:
+                    return result
+        
+        return None
+
+    def _normalize_task(self, task):
+        return {
+            'name': task.get('name', 'Untitled Task'),
+            'description': task.get('description', ''),
+            'priority': task.get('priority', 10),
+            'estimated_hours': task.get('estimated_hours', 0.0),
+        }
 
     def _parse_content_to_tasks(self, content):
         tasks = []

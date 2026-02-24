@@ -10,6 +10,7 @@
                     <field name="name"/>
                     <field name="product_backlog_id"/>
                     <field name="project_id"/>
+                    <field name="team_id" optional="hide"/>
                     <field name="status"/>
                     <field name="priority"/>
                     <field name="estimated_story_points"/>
@@ -37,6 +38,7 @@
                         <group>
                             <field name="product_backlog_id"/>
                             <field name="project_id" readonly="1"/>
+                            <field name="team_id"/>
                             <field name="status"/>
                             <field name="priority"/>
                             <field name="estimated_story_points"/>
@@ -71,6 +73,7 @@
                     <field name="name"/>
                     <field name="product_backlog_id"/>
                     <field name="project_id"/>
+                    <field name="team_id"/>
                     <field name="status"/>
                     <field name="assigned_to"/>
                     <filter name="to_do" string="To Do" domain="[('status', '=', 'to_do')]"/>
@@ -79,6 +82,7 @@
                     <group>
                         <filter name="group_by_product_backlog" string="Product Backlog" domain="[]" context="{'group_by': 'product_backlog_id'}"/>
                         <filter name="group_by_project" string="Project" domain="[]" context="{'group_by': 'project_id'}"/>
+                        <filter name="group_by_team" string="Team" domain="[]" context="{'group_by': 'team_id'}"/>
                         <filter name="group_by_status" string="Status" domain="[]" context="{'group_by': 'status'}"/>
                         <filter name="group_by_assigned_to" string="Assigned To" domain="[]" context="{'group_by': 'assigned_to'}"/>
                     </group>

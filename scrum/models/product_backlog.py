@@ -20,6 +20,10 @@ class ScrumProductBacklog(models.Model):
     description = fields.Text(string='Description')
     parent_id = fields.Many2one('scrum.product_backlog', string='Parent Product Backlog', index=True, domain="['!', ('id', 'child_of', id)]", tracking=True)
     child_ids = fields.One2many('scrum.product_backlog', 'parent_id', string="Sub Product Backlog", export_string_translation=False)
+    backlog_type = fields.Selection([
+        ('epic', _('Epic')),
+        ('feature', _('Feature')),
+    ], string='Type', default='feature')
     priority = fields.Integer(string='Priority', default=1)
     level = fields.Integer(string='Level', default=1, compute='_compute_level', store=True)
     path = fields.Char(string='Path', compute='_compute_path', store=True, help='Full path with parent names separated by /')
@@ -41,6 +45,19 @@ class ScrumProductBacklog(models.Model):
     ], string='Parse Status', default='none', tracking=True)
     parse_error = fields.Text(string='Parse Error Message')
     parsed_stories_json = fields.Json(string='Parsed User Stories JSON')
+    parsed_stories_json_formatted = fields.Text(string='Formatted JSON', compute='_compute_parsed_stories_json_formatted')
+
+    @api.depends('parsed_stories_json')
+    def _compute_parsed_stories_json_formatted(self):
+        for record in self:
+            if record.parsed_stories_json:
+                record.parsed_stories_json_formatted = json.dumps(
+                    record.parsed_stories_json,
+                    indent=2,
+                    ensure_ascii=False
+                )
+            else:
+                record.parsed_stories_json_formatted = False
 
     @api.depends('user_story_ids')
     def _compute_total_story_points(self):
@@ -83,10 +100,11 @@ class ScrumProductBacklog(models.Model):
                 text_content = file_content.decode('utf-8')
             else:
                 text_content = file_content.decode('utf-8', errors='ignore')
-            
+            # 解析内容为树结构
             tree_data = self._parse_content_to_tree(text_content, file_ext)
             
             self.parsed_stories_json = tree_data
+            # 递归创建嵌套结构
             self._create_nested_structure(tree_data, self.id, self.project_id.id)
             
             self.parse_status = 'done'
@@ -163,77 +181,62 @@ class ScrumProductBacklog(models.Model):
 
     def _normalize_json_structure(self, data):
         if isinstance(data, list):
-            return data
+            return [self._normalize_node(node) for node in data]
         elif isinstance(data, dict):
-            if 'features' in data:
-                return self._parse_ai_assistant_format(data)
+            if data.get('type') == 'epic':
+                children = data.get('children', [])
+                return [self._normalize_node(node) for node in children]
             elif 'children' in data:
-                return data.get('children', [])
-            elif 'stories' in data:
-                return [{'name': s.get('name', 'Story'), 'description': s.get('description', ''), 
-                         'acceptance_criteria': s.get('acceptance_criteria', ''), 'priority': s.get('priority', 10),
-                         'children': [], 'tasks': s.get('tasks', [])} for s in data.get('stories', [])]
+                return [self._normalize_node(node) for node in data.get('children', [])]
             else:
-                return [data]
+                return [self._normalize_node(data)]
         return []
 
-    def _parse_ai_assistant_format(self, data):
-        result = []
-        epic_name = data.get('epic', 'Epic')
-        epic_desc = data.get('description', '')
-        features = data.get('features', [])
-        
-        for feature in features:
-            feature_node = {
-                'name': feature.get('featureName', 'Feature'),
-                'description': feature.get('description', ''),
-                'priority': feature.get('featureId', 10) * 10,
-                'children': [],
-                'tasks': [],
-            }
-            
-            user_stories = feature.get('userStories', [])
-            for story in user_stories:
-                story_node = {
-                    'name': story.get('story', 'User Story'),
-                    'description': story.get('story', ''),
-                    'acceptance_criteria': '\n'.join(['- ' + c for c in story.get('acceptanceCriteria', [])]),
-                    'priority': story.get('storyId', 10),
-                    'estimated_story_points': story.get('storyPoints', 0.0),
-                    'children': [],
-                    'tasks': [],
-                }
-                
-                tasks = story.get('tasks', [])
-                for task in tasks:
-                    task_node = {
-                        'name': task.get('taskName', 'Task'),
-                        'description': f"[{task.get('role', '')}] {task.get('description', '')}",
-                        'priority': task.get('taskId', 10),
-                        'estimated_hours': task.get('estimatedHours', 0.0),
-                    }
-                    story_node['tasks'].append(task_node)
-                
-                feature_node['children'].append(story_node)
-            
-            result.append(feature_node)
-        
-        return result
+    def _normalize_node(self, node):
+        if not isinstance(node, dict):
+            return node
+        normalized = {
+            'name': node.get('name', 'Untitled'),
+            'type': node.get('type', ''),
+            'description': node.get('description', ''),
+            'priority': node.get('priority', 10),
+            'acceptance_criteria': node.get('acceptance_criteria', ''),
+            'estimated_story_points': node.get('estimated_story_points', 0.0),
+            'tasks': node.get('tasks', []),
+        }
+        children = node.get('children', [])
+        if children:
+            normalized['children'] = [self._normalize_node(child) for child in children]
+        else:
+            normalized['children'] = []
+        return normalized
 
     def _create_nested_structure(self, nodes_data, parent_backlog_id, project_id):
         for node_data in nodes_data:
             children = node_data.get('children', [])
             tasks = node_data.get('tasks', [])
+            node_type = node_data.get('type', '')
             has_children = children and len(children) > 0
             has_tasks = tasks and len(tasks) > 0
             
-            if has_children:
+            if node_type == 'story':
+                user_story = self.env['scrum.user_story'].create({
+                    'name': node_data.get('name', 'Untitled Story'),
+                    'description': node_data.get('description', ''),
+                    'acceptance_criteria': node_data.get('acceptance_criteria', ''),
+                    'product_backlog_id': parent_backlog_id,
+                    'project_id': project_id,
+                    'priority': node_data.get('priority', 10),
+                    'estimated_story_points': node_data.get('estimated_story_points', 0.0),
+                })
+            elif node_type in ('epic', 'feature'):
                 child_backlog = self.env['scrum.product_backlog'].create({
                     'name': node_data.get('name', 'Untitled'),
                     'description': node_data.get('description', ''),
                     'project_id': project_id,
                     'parent_id': parent_backlog_id,
                     'priority': node_data.get('priority', 10),
+                    'backlog_type': node_type if node_type in ('epic', 'feature') else 'feature',
                 })
                 self._create_nested_structure(children, child_backlog.id, project_id)
             else:
@@ -246,9 +249,6 @@ class ScrumProductBacklog(models.Model):
                     'priority': node_data.get('priority', 10),
                     'estimated_story_points': node_data.get('estimated_story_points', 0.0),
                 })
-                
-                # if has_tasks:
-                #     self._create_tasks_for_story(tasks, user_story.id, project_id)
 
     def action_view_parsed_stories(self):
         self.ensure_one()

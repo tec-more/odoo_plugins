@@ -25,7 +25,8 @@ class ScrumUserStory(models.Model):
         ('done', _('Done')),
     ], string='Status', default='to_do')
     estimated_story_points = fields.Float(string='Estimated Story Points')
-    assigned_to = fields.Many2one('res.users', string='Assigned To')
+    team_id = fields.Many2one('scrum.team', string='Team')
+    assigned_to = fields.Many2one('scrum.team_member', string='Assigned To', domain="[('team_id', '=', team_id)]")
     sprint_task_ids = fields.One2many('scrum.sprint_task', 'user_story_id', string='Sprint Tasks')
     sprint_backlog_id = fields.Many2one('scrum.sprint_backlog', string='Sprint Backlog')
 
@@ -42,6 +43,18 @@ class ScrumUserStory(models.Model):
     def _onchange_product_backlog_id(self):
         if self.product_backlog_id:
             self.project_id = self.product_backlog_id.project_id
+
+    @api.onchange('project_id')
+    def _onchange_project_id(self):
+        if self.project_id:
+            teams = self.env['scrum.team'].search([('project_id', '=', self.project_id.id)])
+            if teams:
+                self.team_id = teams[0].id
+            else:
+                self.team_id = False
+        else:
+            self.team_id = False
+        self.assigned_to = False
 
     project_id = fields.Many2one('project.project', string='Project', related='product_backlog_id.project_id', store=True, readonly=True)
 

@@ -11,6 +11,7 @@
                     <field name="sprint_backlog_id"/>
                     <field name="user_story_id"/>
                     <field name="project_id"/>
+                    <field name="team_id" optional="hide"/>
                     <field name="sprint_stage_id"/>
                     <field name="priority"/>
                     <field name="assigned_to"/>
@@ -33,6 +34,7 @@
                             <field name="sprint_backlog_id"/>
                             <field name="user_story_id"/>
                             <field name="project_id" readonly="1"/>
+                            <field name="team_id" readonly="1"/>
                             <field name="sprint_stage_id"/>
                             <field name="priority"/>
                             <field name="assigned_to"/>
@@ -56,12 +58,14 @@
                     <field name="sprint_backlog_id"/>
                     <field name="user_story_id"/>
                     <field name="project_id"/>
+                    <field name="team_id"/>
                     <field name="sprint_stage_id"/>
                     <field name="assigned_to"/>
                     <group>
                         <filter name="group_by_sprint_backlog" string="Sprint Backlog" domain="[]" context="{'group_by': 'sprint_backlog_id'}"/>
                         <filter name="group_by_user_story" string="User Story" domain="[]" context="{'group_by': 'user_story_id'}"/>
                         <filter name="group_by_project" string="Project" domain="[]" context="{'group_by': 'project_id'}"/>
+                        <filter name="group_by_team" string="Team" domain="[]" context="{'group_by': 'team_id'}"/>
                         <filter name="group_by_sprint_stage" string="Sprint Stage" domain="[]" context="{'group_by': 'sprint_stage_id'}"/>
                         <filter name="group_by_assigned_to" string="Assigned To" domain="[]" context="{'group_by': 'assigned_to'}"/>
                     </group>
