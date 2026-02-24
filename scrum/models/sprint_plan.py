@@ -32,6 +32,62 @@ class ScrumSprintPlan(models.Model):
                 ], order='iteration_number desc', limit=1).iteration_number
                 vals['iteration_number'] = (max_iteration or 0) + 1
         return super().create(vals)
+    
+    @api.depends('sprint_backlog_ids', 'sprint_backlog_ids.status', 'daily_meeting_ids', 'daily_meeting_ids.status', 'sprint_review_meeting_ids', 'sprint_review_meeting_ids.status', 'iteration_review_meeting_ids', 'iteration_review_meeting_ids.status')
+    def _compute_progress_summary(self):
+        for record in self:
+            sprint_backlogs = record.sprint_backlog_ids
+            total_backlogs = len(sprint_backlogs)
+            
+            if total_backlogs == 0:
+                record.completed_backlogs = 0
+                record.total_backlogs = 0
+                record.backlog_completion_percentage = 0.0
+                record.completed_daily_meetings = 0
+                record.completed_review_meetings = 0
+                record.completed_retrospective_meetings = 0
+                continue
+            
+            completed_backlogs = sum(1 for sb in sprint_backlogs if sb.status == 'completed')
+            completed_daily_meetings = sum(1 for dm in record.daily_meeting_ids if dm.status == 'completed')
+            completed_review_meetings = sum(1 for rm in record.sprint_review_meeting_ids if rm.status == 'completed')
+            completed_retrospective_meetings = sum(1 for im in record.iteration_review_meeting_ids if im.status == 'completed')
+            
+            record.completed_backlogs = completed_backlogs
+            record.total_backlogs = total_backlogs
+            record.backlog_completion_percentage = (completed_backlogs / total_backlogs * 100) if total_backlogs > 0 else 0.0
+            record.completed_daily_meetings = completed_daily_meetings
+            record.completed_review_meetings = completed_review_meetings
+            record.completed_retrospective_meetings = completed_retrospective_meetings
+    
+    @api.constrains('status')
+    def _check_status_transition(self):
+        for record in self:
+            if record.status == 'in_progress':
+                if not record.sprint_backlog_ids:
+                    raise UserError(_('Cannot start Sprint Plan without any Sprint Backlogs.'))
+            elif record.status == 'completed':
+                if not any(sb.status == 'completed' for sb in record.sprint_backlog_ids):
+                    raise UserError(_('Cannot complete Sprint Plan. At least one Sprint Backlog must be completed.'))
+    
+    completed_backlogs = fields.Integer(string='Completed Backlogs', compute='_compute_progress_summary', store=True)
+    total_backlogs = fields.Integer(string='Total Backlogs', compute='_compute_progress_summary', store=True)
+    backlog_completion_percentage = fields.Float(string='Backlog Completion %', compute='_compute_progress_summary', store=True, digits=(5, 2))
+    completed_daily_meetings = fields.Integer(string='Completed Daily Meetings', compute='_compute_progress_summary', store=True)
+    completed_review_meetings = fields.Integer(string='Completed Review Meetings', compute='_compute_progress_summary', store=True)
+    completed_retrospective_meetings = fields.Integer(string='Completed Retrospective Meetings', compute='_compute_progress_summary', store=True)
+    
+    def action_start(self):
+        self.ensure_one()
+        if not self.sprint_backlog_ids:
+            raise UserError(_('Cannot start Sprint Plan without any Sprint Backlogs.'))
+        self.write({'status': 'in_progress'})
+    
+    def action_complete(self):
+        self.ensure_one()
+        if not any(sb.status == 'completed' for sb in self.sprint_backlog_ids):
+            raise UserError(_('Cannot complete Sprint Plan. At least one Sprint Backlog must be completed.'))
+        self.write({'status': 'completed'})
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
     status = fields.Selection([

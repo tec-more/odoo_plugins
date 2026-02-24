@@ -59,10 +59,30 @@ class ScrumProductBacklog(models.Model):
             else:
                 record.parsed_stories_json_formatted = False
 
-    @api.depends('user_story_ids')
+    @api.depends('user_story_ids', 'user_story_ids.status')
     def _compute_total_story_points(self):
         for record in self:
             record.total_story_points = sum(story.estimated_story_points for story in record.user_story_ids)
+    
+    @api.depends('user_story_ids', 'user_story_ids.status')
+    def _compute_story_progress(self):
+        for record in self:
+            stories = record.user_story_ids
+            total_stories = len(stories)
+            if total_stories == 0:
+                record.completed_stories = 0
+                record.total_stories = 0
+                record.story_completion_percentage = 0.0
+                continue
+            
+            completed_stories = sum(1 for story in stories if story.status == 'done')
+            record.completed_stories = completed_stories
+            record.total_stories = total_stories
+            record.story_completion_percentage = (completed_stories / total_stories * 100) if total_stories > 0 else 0.0
+    
+    completed_stories = fields.Integer(string='Completed Stories', compute='_compute_story_progress', store=True)
+    total_stories = fields.Integer(string='Total Stories', compute='_compute_story_progress', store=True)
+    story_completion_percentage = fields.Float(string='Story Completion %', compute='_compute_story_progress', store=True, digits=(5, 2))
 
     @api.depends('parent_id', 'parent_id.level')
     def _compute_level(self):

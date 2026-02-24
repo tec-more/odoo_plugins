@@ -36,14 +36,47 @@ class ScrumSprintBacklog(models.Model):
 
     total_story_points = fields.Float(string='Total Story Points', compute='_compute_total_story_points', store=True)
 
-    @api.depends('sprint_task_ids')
+    @api.depends('sprint_task_ids', 'sprint_task_ids.sprint_stage_id')
     def _compute_completed_tasks(self):
         for record in self:
-            completed_tasks = sum(1 for task in record.sprint_task_ids if task.sprint_stage_id and task.sprint_stage_id.name == 'Done')
+            done_stage = self.env['scrum.sprint_stage'].search([('name', '=ilike', 'Done')], limit=1)
+            if done_stage:
+                completed_tasks = sum(1 for task in record.sprint_task_ids if task.sprint_stage_id.id == done_stage.id)
+            else:
+                completed_tasks = 0
             total_tasks = len(record.sprint_task_ids)
             record.completed_tasks = completed_tasks
             record.total_tasks = total_tasks
             record.completion_percentage = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0
+    
+    @api.constrains('status')
+    def _check_status_consistency(self):
+        for record in self:
+            if record.status == 'completed' and record.completion_percentage < 100:
+                raise UserError(_('Cannot mark Sprint Backlog as completed. All tasks must be done first.'))
+    
+    def write(self, vals):
+        result = super().write(vals)
+        if 'status' in vals:
+            for record in self:
+                if record.sprint_plan_id and vals['status'] != record.status:
+                    record._update_sprint_plan_status()
+        return result
+    
+    def _update_sprint_plan_status(self):
+        self.ensure_one()
+        if not self.sprint_plan_id:
+            return
+        
+        sprint_plan = self.sprint_plan_id
+        
+        if self.status == 'completed':
+            all_completed = all(sb.status == 'completed' for sb in sprint_plan.sprint_backlog_ids)
+            if all_completed and sprint_plan.sprint_backlog_ids:
+                sprint_plan.status = 'completed'
+        elif self.status == 'in_progress':
+            if sprint_plan.status == 'planning':
+                sprint_plan.status = 'in_progress'
 
     completed_tasks = fields.Integer(string='Completed Tasks', compute='_compute_completed_tasks', store=True)
     total_tasks = fields.Integer(string='Total Tasks', compute='_compute_completed_tasks', store=True)

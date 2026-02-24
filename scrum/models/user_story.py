@@ -57,6 +57,69 @@ class ScrumUserStory(models.Model):
         self.assigned_to = False
 
     project_id = fields.Many2one('project.project', string='Project', related='product_backlog_id.project_id', store=True, readonly=True)
+    
+    @api.depends('sprint_task_ids', 'sprint_task_ids.sprint_stage_id')
+    def _compute_task_progress(self):
+        for record in self:
+            tasks = record.sprint_task_ids
+            total_tasks = len(tasks)
+            if total_tasks == 0:
+                record.total_tasks = 0
+                record.completed_tasks = 0
+                record.task_completion_percentage = 0.0
+                continue
+            
+            done_stage = self.env['scrum.sprint_stage'].search([('name', '=ilike', 'Done')], limit=1)
+            if done_stage:
+                completed_tasks = sum(1 for task in tasks if task.sprint_stage_id.id == done_stage.id)
+            else:
+                completed_tasks = 0
+            
+            record.total_tasks = total_tasks
+            record.completed_tasks = completed_tasks
+            record.task_completion_percentage = (completed_tasks / total_tasks * 100) if total_tasks > 0 else 0.0
+    
+    @api.depends('status', 'sprint_task_ids', 'sprint_task_ids.sprint_stage_id')
+    def _compute_status_display(self):
+        for record in self:
+            if record.status == 'done':
+                record.status_display = 'Done'
+            elif record.task_completion_percentage > 0:
+                record.status_display = 'In Progress'
+            else:
+                record.status_display = 'To Do'
+    
+    total_tasks = fields.Integer(string='Total Tasks', compute='_compute_task_progress', store=True)
+    completed_tasks = fields.Integer(string='Completed Tasks', compute='_compute_task_progress', store=True)
+    task_completion_percentage = fields.Float(string='Task Completion %', compute='_compute_task_progress', store=True, digits=(5, 2))
+    status_display = fields.Char(string='Status Display', compute='_compute_status_display', store=True)
+    
+    @api.constrains('status')
+    def _check_status_consistency(self):
+        for record in self:
+            if record.status == 'done':
+                if record.task_completion_percentage < 100:
+                    raise UserError(_('Cannot mark user story as Done. All tasks must be completed first.'))
+    
+    def write(self, vals):
+        result = super().write(vals)
+        if 'status' in vals:
+            for record in self:
+                if record.sprint_backlog_id and vals['status'] != record.status:
+                    record._update_sprint_backlog_status()
+        return result
+    
+    def _update_sprint_backlog_status(self):
+        self.ensure_one()
+        if not self.sprint_backlog_id:
+            return
+        
+        sprint_backlog = self.sprint_backlog_id
+        
+        if self.status == 'done':
+            sprint_backlog.status = 'completed'
+        elif self.status == 'in_progress':
+            sprint_backlog.status = 'in_progress'
 
     def action_parse_to_tasks(self):
         self.ensure_one()
